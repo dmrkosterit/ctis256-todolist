@@ -11,35 +11,36 @@
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="./style/tododetail.css" media="screen" />
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
 <div class="wrapper" id = "box">
   <div class="header" style="display: flex">
     <div class="box-footer clearfix no-border">
-      <button *ngIf="selected" [routerLink]="['/list/' + this.selected.list]" routerLinkActive="active" type="button"  class="btn btn-default pull-left"><a class="fa fa-arrow-left"></a></button>
+      <button type="button" class="btn btn-default pull-left"><a class="fa fa-arrow-left"></a></button>
     </div>
     <header>Item Details</header>
   </div>
-  <form #editForm="ngForm" >
+
+  <form >
     <div class="form-group">
       <label for="edittitle">Title: </label><br>
-      <input type="text" autocomplete="off" ngModel="{{selected?.title}}" id="edittitle" name="title">
+      <input type="text" autocomplete="off" id="edittitle" name="title">
     </div>
+
     <div class="form-group">
       <label for="editnote">Note:</label><br>
-      <textarea style="height: 80px" type="text" autocomplete="off" ngModel="{{selected?.note}}" id="editnote" name="note"><br><br>
-              </textarea>
+      <textarea style="height: 80px" type="text" autocomplete="off" id="editnote" name="note"></textarea>
     </div>
-    <input type="hidden" ngModel="{{selected?.id}}" id="id" name="id">
-    <input type="hidden" ngModel="{{selected?.toDoCode}}" id="toDoCode" name="toDoCode">
-    <input type="hidden" ngModel="{{selected?.done}}" id="done" name="done">
+
     <div class="form-group">
       <label for="editlist">List: </label><br>
-      <input type="text" autocomplete="off" ngModel="{{selected?.list}}" id="editlist" name="list">
+      <input type="text" autocomplete="off" id="editlist" name="list">
     </div>
+
     <div class="footer">
-      <button (click)="onUpdateToDo(editForm.value)" type="button" >Update</button>
+      <button type="button" >Update</button>
     </div>
   </form>
 </div>

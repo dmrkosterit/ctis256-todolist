@@ -17,18 +17,24 @@
 <div class="wrapper" id="box">
   <header>Welcome</header>
   <div class="inputField">
-    <form autocomplete="off" #addForm="ngForm" style="display: flex">
-      <input type="text" style="width: auto" autocomplete="off" ngModel id="name" name="name" placeholder="New List">
+    <form autocomplete="off" style="display: flex">
+      <input type="text" style="width: auto" name="name" placeholder="New List">
     </form>
-    <button type="button" class="fa fa-plus" (click)="onAddList(addForm); "></button>
+    <button type="button" class="fa fa-plus" ></button>
   </div>
-  <ul class="todoList" *ngFor="let listItem of lists">
-    <li><a class="title" [routerLink]="['/list/' + listItem.id]">{{listItem.name}} </a>
-      <i class="fa fa-edit" (click)="openModal(listItem,'edit')"></i>
-      <i class="fa fa-trash-o" (click)="openModal(listItem,'delete')"></i>
+
+  <!-- create a foreach loop for the lists-->
+  <ul class="todoList" >
+    <li><a class="title"> List name here </a>
+      <i class="fa fa-edit" ></i>
+      <i class="fa fa-trash-o"></i>
     </li>
   </ul>
 
+
+
+
+<!-- MODALS FOR CONFIRMATION AND FORMS ETC -->
 
   <!-- update modal -->
   <div class="modal fade" id="updateListModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -40,19 +46,16 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form #editForm="ngForm">
+          <form>
             <div class="form-group">
               <label for="name">Name: </label>
-              <input type="text" autocomplete="off" ngModel="{{editList?.name}}" id="editname" name="name"><br><br>
+              <input type="text" autocomplete="off" id="editname" name="name"><br><br>
             </div>
-            <input type="hidden" ngModel="{{editList?.id}}" id="id" name="id">
-            <input type="hidden" ngModel="{{editList?.listCode}}" id="listCode" name="listCode">
+            <input type="hidden" id="id" name="id">
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" id="update-listitem-form"
-                      data-bs-dismiss="updateListModal"
-                      onclick="$('#updateListModal').trigger('click.dismiss.bs.modal')">Close
-              </button>
-              <button (click)="onUpdateList(editForm.value)" type="button" class="btn btn-primary">Update</button>
+                      data-bs-dismiss="updateListModal">Close</button>
+              <button type="button" class="btn btn-primary">Update</button>
             </div>
           </form>
         </div>
@@ -72,15 +75,14 @@
           <h4>Are you sure you want to delete this item?</h4>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" id="delete-listitem-form"
-                  onclick="$('#deleteListModal').trigger('click.dismiss.bs.modal')">Cancel
-          </button>
-          <button (click)="onDeleteList(deleteList.id)" type="button" class="btn btn-red">Delete</button>
+          <button type="button" class="btn btn-secondary" id="delete-listitem-form" >Cancel</button>
+          <button type="button" class="btn btn-red">Delete</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <!-- <script src="script.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

@@ -10,23 +10,25 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="./style/login.css" media="screen" />
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 <body>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="wrapper" id="box">
   <header>Login</header>
   <div class="inputField">
-    <form autocomplete="off" #addForm="ngForm">
-      <input type="text" style="width: auto" autocomplete="off" ngModel id="username" name="username"
+    <form autocomplete="off">
+      <input type="text" style="width: auto" name="username"
              placeholder="Username"> <br> <br>
-      <input type="password" style="width: auto" ngModel id="password" placeholder="Password">
+      <input type="password" style="width: auto" placeholder="Password">
     </form>
     <br>
-    <button type="button" [routerLink]="['/list']" routerLinkActive="active" type="button">Login
-    </button>
+    <button type="button" type="button">Login</button>
   </div>
 </div>
+
+
+
 
 <!-- <script src="script.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

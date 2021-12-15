@@ -10,32 +10,36 @@
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="./style/todoview.css" media="screen" />
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="wrapper" id = "box">
-  <div class="header" style="display: flex" *ngIf="selectedList">
+  <div class="header" style="display: flex">
     <div class="box-footer clearfix no-border">
-      <button routerLink="/list" routerLinkActive="active" type="button"  class="btn btn-default pull-left"><a class="fa fa-arrow-left"></a></button>
+      <button type="button" class="btn btn-default pull-left"><a class="fa fa-arrow-left"></a></button>
     </div>
-    <header>{{this.selectedList.name}}</header>
+    <header>Selected list name here</header>
   </div>
 
   <div class="inputField">
-    <form autocomplete="off" #addForm="ngForm" style="display: flex">
-      <input type="text" style="width: auto" autocomplete="off" ngModel id="title" name="title" placeholder="New Item">
+    <form autocomplete="off" style="display: flex">
+      <input type="text" style="width: auto" autocomplete="off" name="title" placeholder="New Item">
     </form>
     <button type="button" class="fa fa-plus" (click)="onAddToDo(addForm); "></button>
   </div>
-  <ul class="todoList" *ngFor="let toDoItem of toDos">
+
+  <!-- foreach loop for the todos here-->
+  <ul class="todoList">
     <li >
-      <input type="checkbox" [checked]="toDoItem.done" (change)="onCompleteToDo(toDoItem)" />
-      <a class="title" [routerLink]="['/todo',toDoItem.id]">{{toDoItem.title}} </a>
-      <i class="fa fa-edit"  (click)="openModal(toDoItem,'edit')"></i>
-      <i class="fa fa-trash-o" (click)="openModal(toDoItem,'delete')"></i>
+      <input type="checkbox"/>
+      <a class="title"> Name of todo here </a>
+      <i class="fa fa-edit"></i>
+      <i class="fa fa-trash-o"></i>
     </li>
   </ul>
 
+
+  
   <!-- delete modal -->
   <div class="modal fade" id="deleteToDoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -48,8 +52,8 @@
           <h4>Are you sure you want to delete this item?</h4>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary"  id="delete-todoitem-form" onclick="$('#deleteToDoModal').trigger('click.dismiss.bs.modal')">Cancel</button>
-          <button (click)="onDeleteToDo(deleteToDo.id)" type="button"  class="btn btn-red">Delete</button>
+          <button type="button" class="btn btn-secondary"  id="delete-todoitem-form">Cancel</button>
+          <button type="button"  class="btn btn-red">Delete</button>
         </div>
       </div>
     </div>
