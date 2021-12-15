@@ -22,7 +22,7 @@ SET time_zone = "+00:00";
 -- Database: `todolist`
 --
 
---------------------------------------------------------
+-- --------------------------------------------------------
 
 DROP TABLE IF EXISTS list;
 CREATE TABLE IF NOT EXISTS list (
