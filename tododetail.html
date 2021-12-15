@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- Created By CodingNepal - www.codingnepalweb.com -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <title>Todo App JavaScript | CodingNepal</title> -->
+  <!--<link rel="stylesheet" href="/todoview/todoview.component.css">-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="./style/tododetail.css" media="screen" />
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<body>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="wrapper" id = "box">
+  <div class="header" style="display: flex">
+    <div class="box-footer clearfix no-border">
+      <button *ngIf="selected" [routerLink]="['/list/' + this.selected.list]" routerLinkActive="active" type="button"  class="btn btn-default pull-left"><a class="fa fa-arrow-left"></a></button>
+    </div>
+    <header>Item Details</header>
+  </div>
+  <form #editForm="ngForm" >
+    <div class="form-group">
+      <label for="edittitle">Title: </label><br>
+      <input type="text" autocomplete="off" ngModel="{{selected?.title}}" id="edittitle" name="title">
+    </div>
+    <div class="form-group">
+      <label for="editnote">Note:</label><br>
+      <textarea style="height: 80px" type="text" autocomplete="off" ngModel="{{selected?.note}}" id="editnote" name="note"><br><br>
+              </textarea>
+    </div>
+    <input type="hidden" ngModel="{{selected?.id}}" id="id" name="id">
+    <input type="hidden" ngModel="{{selected?.toDoCode}}" id="toDoCode" name="toDoCode">
+    <input type="hidden" ngModel="{{selected?.done}}" id="done" name="done">
+    <div class="form-group">
+      <label for="editlist">List: </label><br>
+      <input type="text" autocomplete="off" ngModel="{{selected?.list}}" id="editlist" name="list">
+    </div>
+    <div class="footer">
+      <button (click)="onUpdateToDo(editForm.value)" type="button" >Update</button>
+    </div>
+  </form>
+</div>
+</body>
