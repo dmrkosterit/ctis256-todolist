@@ -42,6 +42,10 @@ body{
   font-size: 18px;
   font-weight: normal;
 }
+.inputField .trgroup{
+  display: flex;
+  justify-content: space-evenly;
+}
 .inputField input{
   width: 100%;
   height: 100%;
