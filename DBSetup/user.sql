@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `ctis256project`.`users` (
+CREATE TABLE IF NOT EXISTS `users` (
 `id` INT NOT NULL AUTO_INCREMENT ,
 `username` VARCHAR NOT NULL , 
 `passwd` VARCHAR NOT NULL , 
