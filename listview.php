@@ -64,7 +64,6 @@
     </li>
     <?php endforeach?>
   </ul>
-  <a href="./Login-Register/login.php">Sign out</a>
 
   <form action="Login-Register-Logout/logout.php" method="post">
     <button type="submit" name="logout" class="btn btn-primary btn-lg btn-block" style='background-color:red; width:100px; margin-left:120px;'>Logout</button>
