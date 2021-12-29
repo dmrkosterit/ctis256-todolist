@@ -43,9 +43,9 @@ CREATE TABLE IF NOT EXISTS to_do (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
 
 
-INSERT INTO to_do (id, title, note, done) VALUES
-(1, 'CTIS 256 Project', 'due 10th october', FALSE),
-(2, 'Apples', '1kg green', TRUE);
+INSERT INTO to_do (id, title, note, done, listid) VALUES
+(1, 'CTIS 256 Project', 'due 10th october', FALSE, 1),
+(2, 'Apples', '1kg green', TRUE, 1);
 COMMIT;
 
 INSERT INTO list (id, title) VALUES
