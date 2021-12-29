@@ -1,4 +1,19 @@
+<?php
+  include_once "./DBSetup/db.php";
+  extract($_POST); //$title, $price, $launch, $action
+  if(isset($action)){
+    //echo($title);
+    $sql = "insert into list (title) values(?)";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$title]);
+  }
 
+  $sql = "select * from list";
+  $rs= $db->query($sql);
+  $lists = $rs->fetchAll(PDO::FETCH_ASSOC);
+  //var_dump($rows)
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,18 +31,24 @@
 <div class="wrapper" id="box">
   <header>Welcome</header>
   <div class="inputField">
-    <form autocomplete="off" style="display: flex">
-      <input type="text" style="width: auto" name="name" placeholder="New List">
+    <form action="" method="post" autocomplete="off"  style="display: flex">
+      <input type="text" style="width: auto" name="title" placeholder="New List">
+      <button  class="fa fa-plus" style = "color:aliceblue"  name="action" type='submit'></button>
     </form>
-    <button type="button" class="fa fa-plus" ></button>
+    
+    
   </div>
 
   <!-- create a foreach loop for the lists-->
+  
   <ul class="todoList" >
-    <li><a class="title"> List name here </a>
+  <?php foreach( $lists as $list) : ?>
+   <li>
+      <a class='title' href='todoview.php?selectedList=<?=$list["id"]?>'> <?=$list["title"]?>
       <i class="fa fa-edit" ></i>
       <i class="fa fa-trash-o"></i>
     </li>
+    <?php endforeach?>
   </ul>
 
 
