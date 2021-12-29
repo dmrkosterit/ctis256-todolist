@@ -11,7 +11,7 @@
   $sql = "select * from list";
   $rs= $db->query($sql);
   $lists = $rs->fetchAll(PDO::FETCH_ASSOC);
-  //var_dump($rows)
+  //var_dump($lists)
 
 ?>
 
@@ -28,6 +28,8 @@
 </head>
 <body>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
 <div class="wrapper" id="box">
   <header>Welcome</header>
   <div class="inputField">
@@ -44,7 +46,7 @@
   <ul class="todoList" >
   <?php foreach( $lists as $list) : ?>
    <li>
-      <a class='title' href='todoview.php?selectedList=<?=$list["id"]?>'> <?=$list["title"]?>
+      <a class='title' href='todoview.php?listId=<?=$list["id"]?>'> <?=$list["title"]?> </a>
       <i class="fa fa-edit" ></i>
       <i class="fa fa-trash-o"></i>
     </li>

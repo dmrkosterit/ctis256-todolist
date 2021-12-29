@@ -1,4 +1,12 @@
-
+<?php
+  include_once "./DBSetup/db.php";
+  extract($_GET); 
+  //echo($listId);
+  $sql = "select * from to_do where listid = $listId";
+  $rs= $db->query($sql);
+  $todos = $rs->fetchAll(PDO::FETCH_ASSOC);
+  //var_dump($todos)
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,13 +19,27 @@
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
+
 <body>
 <div class="wrapper" id = "box">
+
   <div class="header" style="display: flex">
+
     <div class="box-footer clearfix no-border">
-      <button type="button" class="btn btn-default pull-left"><a class="fa fa-arrow-left"></a></button>
+
+      <button type="button" class="btn btn-default pull-left">
+        <a class="fa fa-arrow-left" href="listview.php"></a>
+      </button>
+
     </div>
-    <header>Selected list name here</header>
+    
+    <?php 
+     $sql = "select * from list where id=?";
+     $rs= $db->prepare($sql);
+     $rs->execute([$listId]);
+     $list = $rs->fetch(PDO::FETCH_ASSOC);
+    echo "<header>{$list["title"]}</header>"
+    ?>
   </div>
 
   <div class="inputField">
@@ -28,12 +50,17 @@
   </div>
 
   <!-- foreach loop for the todos here-->
+
+  
   <ul class="todoList">
+  <?php foreach( $todos as $todo) : ?>
+    
     <li >
       <input type="checkbox"/>
-      <a class="title"> Name of todo here </a>
+      <a class="title"> <?=$todo["title"]?> </a>
       <i class="fa fa-edit"></i>
       <i class="fa fa-trash-o"></i>
+      <?php endforeach?>
     </li>
   </ul>
 
