@@ -4,9 +4,11 @@
   extract($_POST); //$title, $price, $launch, $action
   if(isset($action)){
     //echo($title);
-    $sql = "insert into list (title) values(?)";
-    $stmt = $db->prepare($sql);
-    $stmt->execute([$title]);
+    if($title != ""){
+      $sql = "insert into list (title) values(?)";
+      $stmt = $db->prepare($sql);
+      $stmt->execute([$title]);
+    }
   }
 
   $sql = "select * from list";
@@ -62,13 +64,13 @@
     </li>
     <?php endforeach?>
   </ul>
+  <a href="./Login-Register/login.php">Sign out</a>
 
   <form action="Login-Register-Logout/logout.php" method="post">
     <button type="submit" name="logout" class="btn btn-primary btn-lg btn-block" style='background-color:red; width:100px; margin-left:120px;'>Logout</button>
   </form>
 
-
-<!-- MODALS FOR CONFIRMATION AND FORMS ETC -->
+ <!-- MODALS FOR CONFIRMATION AND FORMS ETC -->
 
   <!-- update modal -->
   <div class="modal fade" id="updateListModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -115,6 +117,7 @@
       </div>
     </div>
   </div>
+  
 </div>
 
 <!-- <script src="script.js"></script> -->
@@ -128,6 +131,8 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <script type="text/javascript"></script>
+
+
 
 </body>
 </html>

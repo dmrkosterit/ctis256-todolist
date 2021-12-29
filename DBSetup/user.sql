@@ -28,7 +28,7 @@ When a new user is registered to the system it automatically setted to 1 which i
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `ctis256project`.`users` (
+CREATE TABLE IF NOT EXISTS `users` (
 `id` INT NOT NULL AUTO_INCREMENT ,
 `usertype` INT(2) NOT NULL,
 `username` VARCHAR(200) NOT NULL , 
