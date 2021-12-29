@@ -22,12 +22,20 @@ SET time_zone = "+00:00";
 -- Database: `user`
 --
 
+/*Two types of users are available in this project which are user and admin. The admin user type is set to 0. 
+When a new user is registered to the system it automatically setted to 1 which is normal user.
+*/
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `ctis256project`.`users` (
 `id` INT NOT NULL AUTO_INCREMENT ,
-`username` VARCHAR NOT NULL , 
-`passwd` VARCHAR NOT NULL , 
+`usertype` INT(2) NOT NULL,
+`username` VARCHAR(200) NOT NULL , 
+`passwd` VARCHAR(200) NOT NULL , 
 PRIMARY KEY (`id`)) 
-ENGINE = InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
+ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
+
+INSERT INTO users (usertype,username,passwd) VALUES
+(0, 'admin','admin');
+COMMIT;

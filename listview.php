@@ -1,5 +1,6 @@
 <?php
   include_once "./DBSetup/db.php";
+  session_start();
   extract($_POST); //$title, $price, $launch, $action
   if(isset($action)){
     //echo($title);
@@ -29,9 +30,18 @@
 <body>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-
+<div>
+  <a href=""></a>
+</div>
 <div class="wrapper" id="box">
-  <header>Welcome</header>
+  <header>Welcome 
+    <?php 
+    //Username will be shown in this php code
+     if(isset($_SESSION["name"])){
+       echo $_SESSION["name"];
+     }
+    ?>
+  </header>
   <div class="inputField">
     <form action="" method="post" autocomplete="off"  style="display: flex">
       <input type="text" style="width: auto" name="title" placeholder="New List">
@@ -53,7 +63,9 @@
     <?php endforeach?>
   </ul>
 
-
+  <form action="Login-Register-Logout/logout.php" method="post">
+    <button type="submit" name="logout" class="btn btn-primary btn-lg btn-block" style='background-color:red; width:100px; margin-left:120px;'>Logout</button>
+  </form>
 
 
 <!-- MODALS FOR CONFIRMATION AND FORMS ETC -->
@@ -104,7 +116,6 @@
     </div>
   </div>
 </div>
-
 
 <!-- <script src="script.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

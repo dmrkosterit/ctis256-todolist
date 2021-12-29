@@ -1,30 +1,23 @@
 <?php
 include_once "../DBSetup/db.php";
-if(!(empty($_POST))){
-  extract($_POST);
-  $error=[];
-  //The rule of the username is 
-  //1- The username must start with letter
-  //2- Username should be between 5-32 characters
-  //3- Letters and numbers only
-  $usernameRE='/^[A-Za-z][A-Za-z0-9]{4,31}$/';
-  if(preg_match($usernameRE,$username)===0){
-    $error[]="username";
-  }
-
-  // A proper password regular expression is needed
-  /*
-  $passwordRE='';
-  if(preg_match($passwordRE,$password)===0){
-    $error[]="password";
-  }
-  */
-  $rs=$db->prepare("SELECT username,passwd FROM users WHERE username=? and passwd=?");
+session_start();
+$resultMessage="";
+extract($_POST);
+if(isset($action)){
+  $rs=$db->prepare("SELECT * FROM users WHERE username=? and passwd=?");
   $rs->execute([$username,$password]);
   $user=$rs->fetch();
-  if($user){
-    header("Location:../todoview.php");
+  if(is_array($user)){
+    $_SESSION["id"]=$user["id"];
+    $_SESSION["name"]=$user["username"];
   }
+  else{
+    $resultMessage="Invalid Username or Password!";
+  }
+}
+if(isset($_SESSION["id"])){
+  var_dump($_SESSION["name"]);
+  header("Location:../listview.php");
 }
 ?>
 <!DOCTYPE html>
@@ -48,30 +41,21 @@ if(!(empty($_POST))){
         <tr>
           <td>
             <label for="username">Username</label>
-              <input type="text" name="username" placeholder="Type your username" value="<?=$username??''?>"/>
+              <input type="text" name="username" placeholder="Type your username" value="<?=$username??''?>" required/>
             </td>
-        </tr>
-        <tr>
-          <td>
-            <?php
-                 if(isset($error)){
-                   echo in_array("username",$error) ? "<span style='color:red;'>Enter a valid username</span>" : "";
-                 }
-            ?>
-          </td>
         </tr>
         <tr>
             <td>
             <label for="password">Password</label>
-            <input type="password" name="password" placeholder="Type your password" value="<?=$password??''?>">
+            <input type="password" name="password" placeholder="Type your password" value="<?=$password??''?>" required>
               
             </td>
         </tr>
         <tr>
           <td>
             <?php
-                 if(isset($error)){
-                   echo in_array("password",$error) ? "<span style='color:red;'>Enter a valid password</span>" : "";
+                 if(isset($resultMessage)){
+                   echo "<span style='color:red;'>$resultMessage</span>";
                  }
             ?>
           </td>
@@ -82,8 +66,8 @@ if(!(empty($_POST))){
           </td>
         </tr>
         <tr>
-          <td id="signup">
-            Not a member? <a href="signup.php">Sign up</a>
+          <td>
+            <p>Not a member? <a href="signup.php">Sign up</a></p>
           </td>
         </tr>
       </table>
