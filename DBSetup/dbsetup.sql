@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS list (
   id int(11) NOT NULL AUTO_INCREMENT,
   title varchar(200) COLLATE utf8mb4_turkish_ci NOT NULL,
   PRIMARY KEY (id)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
 
 DROP TABLE IF EXISTS to_do;
 CREATE TABLE IF NOT EXISTS to_do (
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS to_do (
   listid int(11) NOT NULL,
   PRIMARY KEY (id)/*,
   CONSTRAINT FOREIGN KEY (listid) REFERENCES list(id)*/
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
 
 
 INSERT INTO to_do (id, title, note, done, listid) VALUES
