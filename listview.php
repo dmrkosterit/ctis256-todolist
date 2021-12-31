@@ -36,7 +36,7 @@
   <a href=""></a>
 </div>
 <div class="wrapper" id="box">
-  <header>Welcome 
+  <header>Welcome, 
     <?php 
     //Username will be shown in this php code
      if(isset($_SESSION["name"])){

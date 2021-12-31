@@ -45,7 +45,8 @@ CREATE TABLE IF NOT EXISTS to_do (
 
 INSERT INTO to_do (id, title, note, done, listid) VALUES
 (1, 'CTIS 256 Project', 'due 10th october', FALSE, 1),
-(2, 'Apples', '1kg green', TRUE, 2);
+(2, 'Bananas', '1kg', FALSE, 2),
+(3, 'Apples', '1kg green', TRUE, 2);
 COMMIT;
 
 INSERT INTO list (id, title) VALUES
