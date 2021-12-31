@@ -61,14 +61,13 @@ $todos = $rs->fetchAll(PDO::FETCH_ASSOC);
     <!-- foreach loop for the todos here-->
     <ul class="todoList">
       <?php foreach ($todos as $todo) : ?>
-        <li style="display: flex">
-          <form action="" method="post" autocomplete="off" style="display: flex">
+        <li style="align-content: center; display: flex">
+          <form action="" method="post" action="update" autocomplete="off" style="display: flex">
             <input type="checkbox" id="done" name="done" <?php
                                                           if ($todo["done"]) {
                                                             echo "checked";
                                                           }
-                                                          echo ">";
-                                                          ?> </form>
+                                                          ?>> </form>
             <a class='title' href='tododetail.php?toDoId=<?= $todo["id"] ?>'> <?= $todo["title"] ?> </a>
             <i class="fa fa-edit"></i>
             <i class="fa fa-trash-o"></i>

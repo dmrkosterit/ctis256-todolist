@@ -32,9 +32,7 @@
 <body>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-<div>
-  <a href=""></a>
-</div>
+
 <div class="wrapper" id="box">
   <header>Welcome, 
     <?php 
@@ -47,7 +45,7 @@
   <div class="inputField">
     <form action="" method="post" autocomplete="off"  style="display: flex">
       <input type="text" style="width: auto" name="title" placeholder="New List">
-      <button  class="fa fa-plus" style = "color:aliceblue"  name="action" type='submit'></button>
+      <button  class="fa fa-edit" style = "color:aliceblue"  name="action" type='submit'></button>
     </form>
     
     

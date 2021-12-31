@@ -43,7 +43,7 @@ if(isset($update)){
   <div class="wrapper" id="box">
     <div class="header" style="display: flex">
       <div class="box-footer clearfix no-border">
-        <form action='todoview.php?listId=<?php echo "$listId" ?>' method="post">
+        <form action='todoview.php?listId=<?=$listId?>' method="post">
           <button type="submit" class="btn btn-default pull-left">
             <a class="fa fa-arrow-left"></a>
           </button>
