@@ -6,24 +6,24 @@ $sql = "select * from to_do where id=?";
 $rs = $db->prepare($sql);
 $rs->execute([$toDoId]);
 $todo = $rs->fetch(PDO::FETCH_ASSOC);
-var_dump($todo);
 
-/*extract($_POST); //$title, $price, $launch, $action
-if(isset($action)){
-  //echo($title);
-  if($title != ""){
-    $sql = "insert into to_do (title,done,listid) values(?,FALSE,$listId)";
-    $stmt = $db->prepare($sql);
-    $stmt->execute([$title]);
-  }
-}*/
-
-//echo($listId);
 $sql = "select id from list where id = {$todo["listid"]}";
 $rs = $db->query($sql);
 $listId = $rs->fetch(PDO::FETCH_ASSOC);
 $listId = $listId["id"];
-echo ($listId);
+
+extract($_POST); //$title, $price, $launch, $action, $id
+if(isset($update)){
+  $sql = "update to_do set title=:iTitle, note=:iNote where id=:iId";
+  $stmt = $db->prepare($sql);
+  $stmt->execute(["iTitle"=>$title,"iNote"=>$note, "iId"=> $id]);
+  header("Location:todoview.php?listId=$listId");
+  exit;
+}
+
+//echo($listId);
+
+//echo ($listId);
 
 ?>
 <!DOCTYPE html>
@@ -52,24 +52,21 @@ echo ($listId);
       <header>Item Details</header>
     </div>
 
-    <form>
+    <form action="" method="post">
       <div class="form-group">
-        <label for="edittitle">Title: </label><br>
-        <input type="text" autocomplete="off" id="edittitle" name="title">
+        <label for="title">Title: </label><br>
+        <input type="text" value= "<?=$todo["title"]?>"autocomplete="off" id="title" name="title"></input>
       </div>
 
       <div class="form-group">
-        <label for="editnote">Note:</label><br>
-        <textarea style="height: 80px" type="text" autocomplete="off" id="editnote" name="note"></textarea>
+        <label for="note">Note:</label><br>
+        <textarea style="height: 80px" type="text" autocomplete="off" id="note" name="note" placeholder="<?=$todo["note"]?>"><?=$todo["note"]?></textarea>
       </div>
 
-      <div class="form-group">
-        <label for="editlist">List: </label><br>
-        <input type="text" autocomplete="off" id="editlist" name="list">
-      </div>
+      <input type="hidden" name="id" value="<?=$todo["id"]?>">
 
       <div class="footer">
-        <button type="button">Update</button>
+        <button type="submit" name="update">Update</button>
       </div>
     </form>
   </div>
