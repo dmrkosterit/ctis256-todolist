@@ -1,6 +1,7 @@
 <?php
 include_once "./DBSetup/db.php";
-
+session_start();
+$usertype=$_SESSION["usertype"];
 extract($_GET);
 $sql = "select * from list where id=?";
 $rs = $db->prepare($sql);
@@ -63,14 +64,20 @@ $todos = $rs->fetchAll(PDO::FETCH_ASSOC);
       <?php foreach ($todos as $todo) : ?>
         <li style="align-content: center; display: flex">
           <form action="" method="post" action="update" autocomplete="off" style="display: flex">
+            <?php
+            if($usertype!=0){?>
             <input type="checkbox" id="done" name="done" <?php
                                                           if ($todo["done"]) {
                                                             echo "checked";
-                                                          }
-                                                          ?>> </form>
-            <a class='title' href='tododetail.php?toDoId=<?= $todo["id"] ?>'> <?= $todo["title"] ?> </a>
-            <i class="fa fa-edit"></i>
-            <i class="fa fa-trash-o"></i>
+                                                          }}
+                                                          ?>></form>
+            <a class='title' href='tododetail.php?toDoId=<?= $todo["id"] ?>'><?= $todo["title"] ?> </a>
+            <?php
+            if($usertype!=0){
+            echo "<i class='fa fa-edit'></i>";
+            echo "<i class='fa fa-trash-o'></i>";
+            }
+           ?>
         </li>
       <?php endforeach ?>
     </ul>

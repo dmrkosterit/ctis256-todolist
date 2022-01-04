@@ -10,6 +10,7 @@ if(isset($action)){
   if(is_array($user)){
     $_SESSION["id"]=$user["id"];
     $_SESSION["name"]=$user["username"];
+    $_SESSION["usertype"]=$user["usertype"];
   }
   else{
     $resultMessage="Invalid Username or Password!";

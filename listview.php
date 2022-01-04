@@ -1,21 +1,29 @@
 <?php
   include_once "./DBSetup/db.php";
   session_start();
-  extract($_POST); //$title, $price, $launch, $action
+  extract($_POST);
+  $id=$_SESSION["id"];
+  $usertype=$_SESSION["usertype"];
   if(isset($action)){
-    //echo($title);
     if($title != ""){
-      $sql = "insert into list (title) values(?)";
+      $sql = "insert into list (userid,title) values(?,?)";
       $stmt = $db->prepare($sql);
-      $stmt->execute([$title]);
+      $stmt->execute([$id,$title]);
     }
   }
-
-  $sql = "select * from list";
-  $rs= $db->query($sql);
-  $lists = $rs->fetchAll(PDO::FETCH_ASSOC);
-  //var_dump($lists)
-
+  //If the user is the admin then admin can view every item on the list
+  if($usertype==0){
+    $sql = "select * from list";
+    $rs=$db->query($sql);
+    $lists = $rs->fetchAll(PDO::FETCH_ASSOC);
+  }else{
+    $sql = "select * from list where userid=?";
+    $stmt=$db->prepare($sql);
+    $stmt->execute([$id]);
+    $lists = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  
+  }
+  
 ?>
 
 <!DOCTYPE html>
@@ -57,8 +65,12 @@
   <?php foreach( $lists as $list) : ?>
    <li>
       <a class='title' href='todoview.php?listId=<?=$list["id"]?>'> <?=$list["title"]?> </a>
-      <i class="fa fa-edit" ></i>
-      <i class="fa fa-trash-o"></i>
+      <?php
+        if($usertype!=0){
+            echo "<i class='fa fa-edit'></i>";
+            echo "<i class='fa fa-trash-o'></i>";
+        }
+      ?>
     </li>
     <?php endforeach?>
   </ul>

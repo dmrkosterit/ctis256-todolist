@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS list;
 CREATE TABLE IF NOT EXISTS list (
   id int(11) NOT NULL AUTO_INCREMENT,
+  userid int(11) NOT NULL,
   title varchar(200) COLLATE utf8mb4_turkish_ci NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
@@ -49,9 +50,9 @@ INSERT INTO to_do (id, title, note, done, listid) VALUES
 (3, 'Apples', '1kg green', TRUE, 2);
 COMMIT;
 
-INSERT INTO list (id, title) VALUES
-(1, 'Assignments'),
-(2, 'Shopping List');
+INSERT INTO list (id, userid, title) VALUES
+(1, 2,'Assignments'),
+(2, 3,'Shopping List');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
