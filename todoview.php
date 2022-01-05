@@ -3,15 +3,16 @@ include_once "./DBSetup/db.php";
 session_start();
 $usertype=$_SESSION["usertype"];
 extract($_GET);
+//var_dump($_GET);
 $sql = "select * from list where id=?";
 $rs = $db->prepare($sql);
 $rs->execute([$listId]);
 $list = $rs->fetch(PDO::FETCH_ASSOC);
 
-extract($_POST); //$title, $price, $launch, $action
+extract($_POST); 
 if (isset($action)) {
   //echo($title);
-  if ($title != "") {
+  if (ctype_space($title) == false) {
     $sql = "insert into to_do (title,done,listid) values(?,FALSE,$listId)";
     $stmt = $db->prepare($sql);
     $stmt->execute([$title]);
@@ -44,11 +45,11 @@ $todos = $rs->fetchAll(PDO::FETCH_ASSOC);
     <div class="header" style="display: flex">
       <div class="box-footer clearfix no-border" style="display: flex">
         <form action="listview.php" method="post">
-          <button type="submit" class="btn btn-default pull-left">
+          <button type="submit" style="background-color:DeepSkyBlue;" class="btn btn-default pull-left">
             <a class="fa fa-arrow-left"></a>
           </button>
         </form>
-        <?php echo "<header>{$list["title"]}</header>" ?>
+        <?php echo "<header style='margin-left:15px;'>{$list["title"]}</header>" ?>
       </div>
     </div>
 
@@ -62,27 +63,35 @@ $todos = $rs->fetchAll(PDO::FETCH_ASSOC);
     <!-- foreach loop for the todos here-->
     <ul class="todoList">
       <?php foreach ($todos as $todo) : ?>
-        <li style="align-content: center; display: flex">
+        <li style="align-content: center; display: flex; flex-direction:row;" id='listItems'>
           <form action="" method="post" action="update" autocomplete="off" style="display: flex">
             <?php
             if($usertype!=0){?>
-            <input type="checkbox" id="done" name="done" <?php
-                                                          if ($todo["done"]) {
-                                                            echo "checked";
-                                                          }}
-                                                          ?>></form>
-            <a class='title' href='tododetail.php?toDoId=<?= $todo["id"] ?>'><?= $todo["title"] ?> </a>
-            <?php
+            <input type="checkbox" style="zoom:1.5;margin-top:8px;" id="done" name="done" 
+              <?php
+                  if ($todo["done"]) {
+                    echo "checked";
+                  }}
+              ?>
+            >
+          </form>
+          <div>
+            <a class='title' style="margin-left:10px;" id='listItem' href='' value='<?= $todo["id"] ?>'><?= $todo["title"] ?> </a>
+            <p id='detail'></p>
+          </div>            
+            <?php 
             if($usertype!=0){
-            echo "<i class='fa fa-edit'></i>";
-            echo "<i class='fa fa-trash-o'></i>";
+            ?>
+             <a class='fa fa-edit' style="font-size:18px;margin-left:15px;color:green;margin-top:13px;" type='button' href='tododetail.php?toDoId=<?= $todo["id"] ?>' ></a>
+             <a class='fa fa-trash-o' id='deleteButton' style="font-size:18px;margin-left:15px;color:red;margin-top:12px;" type='button'  onclick='deleteListItem(<?= $todo["id"] ?>)'></a>
+            <?php 
             }
            ?>
         </li>
       <?php endforeach ?>
     </ul>
 
-    <!-- delete modal -->
+    <!-- delete modal
     <div class="modal fade" id="deleteToDoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -100,6 +109,7 @@ $todos = $rs->fetchAll(PDO::FETCH_ASSOC);
         </div>
       </div>
     </div>
+     -->
 
   </div>
 
@@ -108,6 +118,28 @@ $todos = $rs->fetchAll(PDO::FETCH_ASSOC);
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script type="text/javascript"></script>
+
+  <script>
+    $("#listItem").click(function() {
+      let todoId =  $('#listItem').value();
+      getDetail(todoId);
+    });
+
+    function getDetail(todoId){
+      $.get("goDetail.php", function(data) {
+        alert(data);
+        $("#detail").text(data.detail);
+      });
+    }
+
+    function deleteListItem(todoId){
+      $.get("deleteItem.php",{"todoId":todoId}, function(data) {
+        alert(data);
+        $("#listItems").append(data);
+      });
+    }
+
+  </script>
 
 </body>
 

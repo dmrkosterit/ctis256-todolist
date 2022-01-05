@@ -5,24 +5,27 @@
   $id=$_SESSION["id"];
   $usertype=$_SESSION["usertype"];
   if(isset($action)){
-    if($title != ""){
+    if(ctype_space($title) == false){
       $sql = "insert into list (userid,title) values(?,?)";
       $stmt = $db->prepare($sql);
       $stmt->execute([$id,$title]);
     }
   }
   //If the user is the admin then admin can view every item on the list
-  if($usertype==0){
-    $sql = "select * from list";
-    $rs=$db->query($sql);
-    $lists = $rs->fetchAll(PDO::FETCH_ASSOC);
-  }else{
-    $sql = "select * from list where userid=?";
-    $stmt=$db->prepare($sql);
-    $stmt->execute([$id]);
-    $lists = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  if(isset($id)){
+    if($usertype==0){
+      $sql = "select * from list";
+      $rs=$db->query($sql);
+      $lists = $rs->fetchAll(PDO::FETCH_ASSOC);
+    }else{
+      $sql = "select * from list where userid=?";
+      $stmt=$db->prepare($sql);
+      $stmt->execute([$id]);
+      $lists = $stmt->fetchAll(PDO::FETCH_ASSOC);
   
+    }
   }
+ 
   
 ?>
 
@@ -62,13 +65,16 @@
   <!-- create a foreach loop for the lists-->
   
   <ul class="todoList" >
-  <?php foreach( $lists as $list) : ?>
+  <?php 
+    foreach( $lists as $list) : ?>
    <li>
       <a class='title' href='todoview.php?listId=<?=$list["id"]?>'> <?=$list["title"]?> </a>
       <?php
         if($usertype!=0){
-            echo "<i class='fa fa-edit'></i>";
-            echo "<i class='fa fa-trash-o'></i>";
+      ?>
+          <a class='fa fa-edit' style="font-size:18px;margin-left:15px;color:green;" type='button' href='tododetail.php?toDoId=<?= $list["id"] ?>' ></a>
+          <a class='fa fa-trash-o' style="font-size:18px;margin-left:15px;color:red;" type='button' href='tododetail.php?toDoId=<?= $list["id"] ?>'></a>
+      <?php
         }
       ?>
     </li>

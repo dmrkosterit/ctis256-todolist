@@ -1,6 +1,14 @@
 <?php
 include_once "../DBSetup/db.php";
 session_start();
+
+if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > (30*60))) {//30 min session
+  session_unset(); 
+  session_destroy(); 
+  echo "session destroyed"; 
+}
+$_SESSION['start'] = time();
+
 $resultMessage="";
 extract($_POST);
 if(isset($action)){

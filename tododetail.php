@@ -12,7 +12,7 @@ $rs = $db->query($sql);
 $listId = $rs->fetch(PDO::FETCH_ASSOC);
 $listId = $listId["id"];
 
-extract($_POST); //$title, $price, $launch, $action, $id
+extract($_POST); 
 if(isset($update)){
   $sql = "update to_do set title=:iTitle, note=:iNote where id=:iId";
   $stmt = $db->prepare($sql);
@@ -44,29 +44,29 @@ if(isset($update)){
     <div class="header" style="display: flex">
       <div class="box-footer clearfix no-border">
         <form action='todoview.php?listId=<?=$listId?>' method="post">
-          <button type="submit" class="btn btn-default pull-left">
+          <button type="submit" style="background-color:DeepSkyBlue;" class="btn btn-default pull-left">
             <a class="fa fa-arrow-left"></a>
           </button>
         </form>
       </div>
-      <header>Item Details</header>
+      <header style="margin-left:15px;">Item Details</header>
     </div>
 
     <form action="" method="post">
       <div class="form-group">
         <label for="title">Title: </label><br>
-        <input type="text" value= "<?=$todo["title"]?>"autocomplete="off" id="title" name="title"></input>
+        <input style='margin: 10px 10px 10px 10px;width:90%; background: #f2f2f2;border-radius: 3px;' type="text" value= "<?=$todo["title"]?>"autocomplete="off" id="title" name="title"></input>
       </div>
 
       <div class="form-group">
         <label for="note">Note:</label><br>
-        <textarea style="height: 80px" type="text" autocomplete="off" id="note" name="note" placeholder="<?=$todo["note"]?>"><?=$todo["note"]?></textarea>
+        <textarea style="height: 80px;margin: 10px 10px 10px 10px;width:90%; background: #f2f2f2;border-radius: 3px;" type="text" autocomplete="off" id="note" name="note" placeholder="<?=$todo["note"]?>"><?=$todo["note"]?></textarea>
       </div>
 
       <input type="hidden" name="id" value="<?=$todo["id"]?>">
 
       <div class="footer">
-        <button type="submit" name="update">Update</button>
+        <button type="submit" style="margin: 10px auto 10px auto;" name="update">Update</button>
       </div>
     </form>
   </div>
