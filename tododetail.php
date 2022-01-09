@@ -1,6 +1,11 @@
 <?php
 include_once "./DBSetup/db.php";
-
+session_start();
+if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > (5*60))) {//30 min session
+  session_unset(); 
+  session_destroy(); 
+  header("Location:./Login-Register-Logout/login.php");
+}
 extract($_GET);
 $sql = "select * from to_do where id=?";
 $rs = $db->prepare($sql);

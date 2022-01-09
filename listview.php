@@ -4,8 +4,13 @@
   extract($_POST);
   $id=$_SESSION["id"];
   $usertype=$_SESSION["usertype"];
+  if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > (5*60))) {//30 min session
+    session_unset(); 
+    session_destroy(); 
+    header("Location:./Login-Register-Logout/login.php");
+  }
   if(isset($action)){
-    if(ctype_space($title) == false){
+    if(ctype_space($title) == false && $title != null){
       $sql = "insert into list (userid,title) values(?,?)";
       $stmt = $db->prepare($sql);
       $stmt->execute([$id,$title]);

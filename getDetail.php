@@ -1,4 +1,5 @@
 <?php
+
 header("Content-Type: application/json") ;
 include_once "./DBSetup/db.php";
 
@@ -9,6 +10,8 @@ $rs = $db->prepare($sql);
 $rs->execute([$todoId]);
 $data = ["detail" => $rs->fetch(PDO::FETCH_ASSOC)];
 
-if(isset($note)){
-  json_encode($note) ;
+vardump($data);
+
+if(isset($data)){
+  json_encode($data) ;
 }

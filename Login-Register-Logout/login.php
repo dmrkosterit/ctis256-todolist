@@ -2,13 +2,6 @@
 include_once "../DBSetup/db.php";
 session_start();
 
-if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > (30*60))) {//30 min session
-  session_unset(); 
-  session_destroy(); 
-  echo "session destroyed"; 
-}
-$_SESSION['start'] = time();
-
 $resultMessage="";
 extract($_POST);
 if(isset($action)){
@@ -16,6 +9,7 @@ if(isset($action)){
   $rs->execute([$username,$password]);
   $user=$rs->fetch();
   if(is_array($user)){
+    $_SESSION['start'] = time();
     $_SESSION["id"]=$user["id"];
     $_SESSION["name"]=$user["username"];
     $_SESSION["usertype"]=$user["usertype"];
@@ -25,7 +19,6 @@ if(isset($action)){
   }
 }
 if(isset($_SESSION["id"])){
-  var_dump($_SESSION["name"]);
   header("Location:../listview.php");
 }
 ?>

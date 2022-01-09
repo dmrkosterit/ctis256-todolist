@@ -1,9 +1,9 @@
 <?php
 
 //$dsn = "mysql:host=localhost;port=3308;dbname=gamesdb" ;
-$user = "std" ;
-$pass = "erdemsert7" ;
-$dbname = "ctis256project";
+$user = "root" ;
+$pass = "" ;
+$dbname = "todo";
 
 $dsn = "mysql:host=localhost;dbname=$dbname" ;
 try {
