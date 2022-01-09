@@ -74,15 +74,23 @@ $todos = $rs->fetchAll(PDO::FETCH_ASSOC);
           <form action="" method="post" action="update" autocomplete="off" style="display: flex">
             <?php
             if($usertype!=0){?>
-            <input type="checkbox" style="zoom:1.5;margin-top:8px;" id="done" name="done" 
+            <input type="checkbox" style="zoom:1.5;margin-top:8px;" id="done" name="done" onclick="setDone(<?=$todo['done']?>)"
               <?php
                   if ($todo["done"]) {
                     echo "checked";
                   }
                 }
-                $sql = "update to_do set done=1 where id=?";
-                $rs = $db->prepare($sql);
-                $rs->execute([$todo['id']]);
+                if($todo["done"]){
+                  $sql = "update to_do set done=0 where id=?";
+                  $rs = $db->prepare($sql);
+                  $rs->execute([$todo['id']]);
+                }else{
+                  
+                  $sql = "update to_do set done=1 where id=?";
+                  $rs = $db->prepare($sql);
+                  $rs->execute([$todo['id']]);
+                }
+                
               ?>
             >
           </form>
@@ -108,7 +116,12 @@ $todos = $rs->fetchAll(PDO::FETCH_ASSOC);
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script type="text/javascript"></script>
-  
+
+  <script>
+    
+  </script>
+
+
 </body>
 
 </html>
