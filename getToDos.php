@@ -1,18 +1,24 @@
 <?php
 include_once "./DBSetup/db.php";
+header("Content-Type: application/json") ;
 session_start();
 $usertype=$_SESSION["usertype"];
 
 extract($_GET);
 
-$sql = "select * from to_do where listid = $listId";
-$rs = $db->query($sql);
+$sql = "select * from to_do where listid=?";
+$rs = $db->prepare($sql);
+$rs->execute([$listId]);
 $todos = $rs->fetchAll(PDO::FETCH_ASSOC);
-var_dump($todos);
 
+$data = ["numOfTodos"=>$rs->rowCount(), "todos"=>$todos];
+echo json_encode($data);   
 
-foreach ($todos as $todo) : ?>
-        <li style="align-content: center; display: flex; flex-direction:row;" >
+/*
+foreach ($todos as $todo) :
+  echo $todo["title"];
+  header("Location:todoview.php"); ?>
+        <tr style="align-content: center; display: flex; flex-direction:row;" >
           <form action="" method="post" action="update" autocomplete="off" style="display: flex">
             <?php
             if($usertype!=0){?>
@@ -37,5 +43,6 @@ foreach ($todos as $todo) : ?>
             <?php 
             }
            ?>
-        </li>
-<?php endforeach ?>
+        </tr>
+<?php endforeach
+?>

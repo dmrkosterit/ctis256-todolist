@@ -57,29 +57,11 @@ if (isset($action)) {
     </div>
 
     <!-- foreach loop for the todos here-->
-    <ul class="todoList" id='listItems'>
+    <table class="todoList" id='listItems'>
       
-    </ul>
+    </table>
 
-    <!-- delete modal
-    <div class="modal fade" id="deleteToDoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title">Delete Item</h3>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <h4>Are you sure you want to delete this item?</h4>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="delete-todoitem-form">Cancel</button>
-            <button type="button" class="btn btn-red">Delete</button>
-          </div>
-        </div>
-      </div>
-    </div>
-     -->
+   
 
   </div>
 
@@ -91,13 +73,26 @@ if (isset($action)) {
 
   <script>      
 
-jQuery(document).ready(function(){
-    $.get("getToDos.php", {"listId" : <?=$listId?>}, function(data) {
-      alert(data);
-      $("#listItems").append(data);
+  $(function(){
+    $.get("getToDos.php",
+      {"listId" : <?=$list["id"]?>},
+      function(data) {
+        alert(data);
+        //$("#listItems").append(data);
+        displayTodos(data);
     });
 
-});
+    function displayTodos(data) { 
+      var games = data.games;
+      
+      for (var i = 0; i < data.numOfTodos; i++) {
+        var out = '<tr style="align-content: center; display: flex; flex-direction:row;" ><td>'+ data[i].title+ '</td></tr>';
+          
+        $("#listItems").append(out);
+      }
+    }
+
+  });
 /*
   $(function($) {
     $.get("getToDos.php", {"listId" : }, function(data) {

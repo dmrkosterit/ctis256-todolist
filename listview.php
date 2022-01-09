@@ -16,6 +16,14 @@
       $stmt->execute([$id,$title]);
     }
   }
+
+  if(isset($_GET["listId"])){
+    $listid = $_GET["listId"];
+    $sql = "delete from list where id=?";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$listid]);
+  }
+  
   //If the user is the admin then admin can view every item on the list
   if(isset($id)){
     if($usertype==0){
@@ -77,8 +85,8 @@
       <?php
         if($usertype!=0){
       ?>
-          <a class='fa fa-edit' style="font-size:18px;margin-left:15px;color:green;" type='button' href='tododetail.php?toDoId=<?= $list["id"] ?>' ></a>
-          <a class='fa fa-trash-o' style="font-size:18px;margin-left:15px;color:red;" type='button' href='tododetail.php?toDoId=<?= $list["id"] ?>'></a>
+          <a class='fa fa-edit' style="font-size:18px;margin-left:15px;color:green;" type='button' href='listDetail.php?listId=<?= $list["id"] ?>' ></a>
+          <a class='fa fa-trash-o' style="font-size:18px;margin-left:15px;color:red;" name='deleteList' type='button ' href='?listId=<?=$list["id"] ?>'></a>
       <?php
         }
       ?>
