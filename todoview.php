@@ -80,6 +80,9 @@ $todos = $rs->fetchAll(PDO::FETCH_ASSOC);
                     echo "checked";
                   }
                 }
+                $sql = "update to_do set done=1 where id=?";
+                $rs = $db->prepare($sql);
+                $rs->execute([$todo['id']]);
               ?>
             >
           </form>
