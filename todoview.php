@@ -19,6 +19,18 @@ if (isset($action)) {
   }
 }
 
+if(isset($_GET["todoId"])){
+  $todoId = $_GET["todoId"];
+  $sql = "delete from to_do where id=?";
+  $stmt = $db->prepare($sql);
+  $stmt->execute([$todoId]);
+}
+
+$sql = "select * from to_do where listid=?";
+$rs = $db->prepare($sql);
+$rs->execute([$listId]);
+$todos = $rs->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +43,6 @@ if (isset($action)) {
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="./style/todoview.css" media="screen" />
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
@@ -57,75 +68,44 @@ if (isset($action)) {
     </div>
 
     <!-- foreach loop for the todos here-->
-    <table class="todoList" id='listItems'>
-      
-    </table>
-
-   
-
+    <ul class="todoList" id='listItems'>
+    <?php foreach ($todos as $todo) :?>
+        <li style="align-content: center; display: flex; flex-direction:row;" >
+          <form action="" method="post" action="update" autocomplete="off" style="display: flex">
+            <?php
+            if($usertype!=0){?>
+            <input type="checkbox" style="zoom:1.5;margin-top:8px;" id="done" name="done" 
+              <?php
+                  if ($todo["done"]) {
+                    echo "checked";
+                  }
+                }
+              ?>
+            >
+          </form>
+          <div>
+            <h class='title' style="margin-left:10px;" id='listItem' href=''><?= $todo["title"] ?> </h>
+            <p id='detail'></p>
+          </div>            
+            <?php 
+            if($usertype!=0){
+            ?>
+             <a class='fa fa-edit' style="font-size:18px;margin-left:15px;color:green;margin-top:13px;" type='button' href='tododetail.php?toDoId=<?= $todo["id"] ?>' ></a>
+             <a class='fa fa-trash-o' id='deleteButton' style="font-size:18px;margin-left:15px;color:red;margin-top:12px;" type='button'  href='?todoId=<?=$todo["id"]?>&listId=<?=$todo["listid"]?>'></a>
+            <?php 
+            }
+           ?>
+        </li>
+<?php endforeach?>
+          </ul>
   </div>
 
   <!-- <script src="script.js"></script> -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script type="text/javascript"></script>
-
-  <script>      
-
-  $(function(){
-    $.get("getToDos.php",
-      {"listId" : <?=$list["id"]?>},
-      function(data) {
-        alert(data);
-        //$("#listItems").append(data);
-        displayTodos(data);
-    });
-
-    function displayTodos(data) { 
-      var games = data.games;
-      
-      for (var i = 0; i < data.numOfTodos; i++) {
-        var out = '<tr style="align-content: center; display: flex; flex-direction:row;" ><td>'+ data[i].title+ '</td></tr>';
-          
-        $("#listItems").append(out);
-      }
-    }
-
-  });
-/*
-  $(function($) {
-    $.get("getToDos.php", {"listId" : }, function(data) {
-      alert(data);
-      $("#listItems").append(data);
-    });
-
-    $("#listItem").click(function() {
-      let todoId = 
-      alert(todoId);
-      getDetail(todoId);
-    });
-
-    function getDetail(todoId){
-      $.get("goDetail.php",{"detail": $("#detail").val()}, 
-      function(data) {
-        alert(data);
-        var out = data.detail;
-        $("#detail").text(out);
-      });
-    }
-
-    function deleteListItem(todoId){
-      $.get("deleteItem.php",{"todoId":todoId}, function(data) {
-        alert(data);
-        $("#listItems").append(data);
-      });
-    }
-    
-  });*/
-
-  </script>
-
+  
 </body>
 
 </html>

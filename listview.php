@@ -23,6 +23,7 @@
     $stmt = $db->prepare($sql);
     $stmt->execute([$listid]);
   }
+
   
   //If the user is the admin then admin can view every item on the list
   if(isset($id)){
